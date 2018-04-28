@@ -1,12 +1,21 @@
-#!/home/samuel/code/mouse-events/env/bin/python
+#!/usr/bin/env python3.6
 import struct
 import sys
 import time
 from pathlib import Path
 
 import fcntl
-from pyautogui import keyDown, keyUp, press
-from ioctl_opt import IOC, IOC_READ
+try:
+    from ioctl_opt import IOC, IOC_READ
+    from pyautogui import keyDown, keyUp, press
+except ImportError as e:
+    raise ImportError("""
+        You need to install PyAutoGUI, python-3xlib which it requires, and ioctl-opt:
+
+            pip install python3-xlib --user
+            pip install PyAutoGUI ioctl-opt --user
+
+    """) from e
 
 FORMAT = 'llHHI'
 EVENT_SIZE = struct.calcsize(FORMAT)
@@ -21,11 +30,11 @@ def move(direction):
 
 
 def left():
-    move('left')
+    move('pageup')
 
 
 def right():
-    move('right')
+    move('pagedown')
 
 
 def zoom():
