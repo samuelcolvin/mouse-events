@@ -48,7 +48,8 @@ CODES = {
     (2, 6, 2**32 - 1): left,
     (2, 6, 1): right,
     # (1, 280, 0): zoom,
-    (1, 280, 1): zoom,
+    # (1, 280, 1): zoom,
+    (1, 29, 1): zoom,
 }
 REPEAT_TTL = 0.6
 
@@ -75,7 +76,8 @@ def main(verbose_):
         verbose_ and print(*args, **kwargs)
 
     devs = get_devices()
-    mouse_names = 'Logitech Performance MX', 'Logitech Unifying Device'
+    # mouse_names = 'Logitech Performance MX', 'Logitech Unifying Device'
+    mouse_names = 'Logitech MX Master', 'Logitech Unifying Device'
     dev = None
     devs_str = '\n'.join(f'  {file:>20}: {name}' for file, name in devs)
     verbose('devices:\n' + devs_str)
