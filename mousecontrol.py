@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.6
+#!/usr/bin/env python3
 import struct
 import sys
 import time
@@ -12,8 +12,7 @@ except ImportError as e:
     raise ImportError("""
         You need to install PyAutoGUI, python-3xlib which it requires, and ioctl-opt:
 
-            pip install python3-xlib --user
-            pip install PyAutoGUI ioctl-opt --user
+            pip install python3-xlib PyAutoGUI ioctl-opt --user
 
     """) from e
 
@@ -73,7 +72,7 @@ def get_devices():
 
 def main(verbose_):
     def verbose(*args, **kwargs):
-        verbose_ and print(*args, **kwargs)
+        verbose_ and print(*args, flush=True, **kwargs)
 
     devs = get_devices()
     # mouse_names = 'Logitech Performance MX', 'Logitech Unifying Device'
@@ -84,10 +83,10 @@ def main(verbose_):
     for match in mouse_names:
         dev, dev_name = next(([file, name] for file, name in devs if match in name), (None, None))
         if dev:
-            print(f'using: {dev} "{dev_name}"')
+            print(f'using: {dev} "{dev_name}"', flush=True)
             break
     if not dev:
-        print(f'no devices found: "{mouse_names}", devices:\n{devs_str}')
+        print(f'no devices found: "{mouse_names}", devices:\n{devs_str}', flush=True)
         sys.exit(1)
     try:
         last_event = None
@@ -98,13 +97,13 @@ def main(verbose_):
                 if event:
                     _, _, type_, code, value = struct.unpack(FORMAT, event)
                     if verbose_ and (type_, code, value) != (0, 0, 0):
-                        print(f'type: {type_} code: {code} value: {value}')
+                        print(f'type: {type_} code: {code} value: {value}', flush=True)
                     event = CODES.get((type_, code, value))
                     if event:
                         now = time.time()
                         e_name = event.__name__
                         run = last_event != e_name or now > (last_event_time + REPEAT_TTL)
-                        print(e_name, f'{now - last_event_time:0.2f}s', 'run' if run else '-')
+                        print(e_name, f'{now - last_event_time:0.2f}s', 'run' if run else '-', flush=True)
                         if run:
                             event()
                             last_event = e_name

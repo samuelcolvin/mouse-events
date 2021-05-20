@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.6
+#!/usr/bin/env python3
 try:
     from pyautogui import click
 except ImportError as e:

@@ -3,7 +3,7 @@ Description=mousecontrol
 
 [Service]
 User=samuel
-Environment='DISPLAY=:1' 'XAUTHORITY=/run/user/1000/gdm/Xauthority'
+Environment='DISPLAY=:0' 'XAUTHORITY=/run/user/1000/gdm/Xauthority'
 WorkingDirectory=/home/samuel
 ExecStart=/home/samuel/bin/mousecontrol.py
 Restart=always
